@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-03-15T06:10:00.000Z",
+  "activeFeatures": [],
+  "primaryFeature": null,
+  "features": {
+    "openclaw-google-tutorial": {
+      "phase": "archived",
+      "matchRate": 95,
+      "iterationCount": 0,
+      "startedAt": "2026-03-15T04:30:00.000Z",
+      "archivedAt": "2026-03-15T06:10:00.000Z",
+      "archivedTo": "docs/archive/2026-03/openclaw-google-tutorial/"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 3,
+    "level": "Starter",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-03-15T04:22:05.466Z",
+    "onboardingCompleted": true,
+    "lastActivity": "2026-03-15T06:10:00.000Z"
+  },
+  "history": [
+    {"action": "plan", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T04:30:00.000Z"},
+    {"action": "design", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T04:40:00.000Z"},
+    {"action": "do", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T05:00:00.000Z"},
+    {"action": "check", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T05:30:00.000Z", "matchRate": 95},
+    {"action": "report", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T06:00:00.000Z"},
+    {"action": "archive", "feature": "openclaw-google-tutorial", "timestamp": "2026-03-15T06:10:00.000Z", "archivedTo": "docs/archive/2026-03/openclaw-google-tutorial/"}
+  ]
+}
