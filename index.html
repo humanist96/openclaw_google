@@ -174,14 +174,43 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
 .callout.success{background:var(--success-bg);border-color:rgba(5,150,105,0.15)}
 .callout.success .callout-title{color:var(--success)}
 
-/* Image placeholder */
+/* Image placeholder & gallery */
+.img-gallery{margin:24px 0}
 .img-placeholder{border:2px dashed var(--border);border-radius:var(--radius);
-  padding:40px 24px;text-align:center;background:var(--bg-tertiary);margin:24px 0;
-  transition:border-color .2s}
-.img-placeholder:hover{border-color:var(--accent)}
-.img-placeholder .ph-icon{font-size:36px;margin-bottom:12px;opacity:0.5}
+  padding:40px 24px;text-align:center;background:var(--bg-tertiary);
+  transition:border-color .2s;cursor:pointer;position:relative}
+.img-placeholder:hover{border-color:var(--accent);background:var(--accent-bg)}
+.img-placeholder .ph-icon{font-size:36px;margin-bottom:12px;opacity:0.5;
+  transition:transform .2s}
+.img-placeholder:hover .ph-icon{transform:scale(1.1)}
 .img-placeholder .ph-text{font-size:14px;color:var(--text-muted);font-weight:500}
 .img-placeholder .ph-hint{font-size:12px;color:var(--text-muted);margin-top:6px;opacity:0.7}
+.img-placeholder input[type="file"]{display:none}
+
+/* Uploaded images */
+.img-gallery-items{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.img-gallery-item{position:relative;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--border);background:var(--bg-secondary);box-shadow:var(--shadow)}
+.img-gallery-item img{width:100%;display:block;object-fit:contain;max-height:600px;
+  background:#f0f0f0}
+[data-theme="dark"] .img-gallery-item img{background:#1a1a2e}
+.img-gallery-item .img-caption{padding:8px 14px;font-size:13px;color:var(--text-secondary);
+  border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.img-gallery-item .img-caption input{flex:1;background:transparent;border:none;
+  color:var(--text-secondary);font-size:13px;font-family:inherit;outline:none;
+  padding:2px 0}
+.img-gallery-item .img-caption input::placeholder{color:var(--text-muted)}
+.img-gallery-item .img-caption input:focus{color:var(--text-primary)}
+.img-remove{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
+  background:var(--bg-tertiary);color:var(--text-muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:all .2s;flex-shrink:0;margin-left:8px}
+.img-remove:hover{background:var(--danger-bg);border-color:var(--danger);color:var(--danger)}
+.img-add-more{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
+  border-radius:var(--radius-sm);border:1px dashed var(--border);background:transparent;
+  color:var(--text-muted);cursor:pointer;font-size:13px;font-family:inherit;
+  transition:all .2s;margin-top:4px}
+.img-add-more:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 
 /* Ordered steps */
 .ordered-steps{counter-reset:ostep;margin:24px 0}
@@ -425,10 +454,14 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">WSL 연결 화면 스크린샷</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="WSL 연결 화면 스크린샷">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">WSL 연결 화면 스크린샷</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>작업 폴더 생성</h3>
@@ -460,10 +493,14 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">터미널 전체화면 설정 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="터미널 전체화면 설정 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">터미널 전체화면 설정 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -499,10 +536,14 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
 
         <p>설치 확인 메시지가 나타나면 <code>Y</code>를 입력합니다.</p>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">스킬 설치 완료 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="스킬 설치 완료 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">스킬 설치 완료 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>불필요한 파일 정리</h3>
@@ -559,10 +600,14 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">구글 클라우드 프로젝트 생성 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="구글 클라우드 프로젝트 생성 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">구글 클라우드 프로젝트 생성 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>3-2. API 활성화 (5개 서비스)</h3>
@@ -579,10 +624,14 @@ body{font-family:'Pretendard Variable',system-ui,-apple-system,'Segoe UI',Roboto
           </tbody>
         </table>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">API 활성화 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="API 활성화 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">API 활성화 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>3-3. OAuth 동의 화면 구성</h3>
@@ -682,10 +731,14 @@ cp ~/Downloads/client_secret_*.json .keys/</pre>
         <h3>3-7. 프로젝트 ID 확인</h3>
         <p>구글 클라우드 콘솔 상단의 <strong>프로젝트 선택</strong> 버튼을 클릭하면 프로젝트 ID를 확인할 수 있습니다. 이 ID를 메모해두세요.</p>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">프로젝트 ID 확인 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="프로젝트 ID 확인 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">프로젝트 ID 확인 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -739,10 +792,14 @@ cp ~/Downloads/client_secret_*.json .keys/</pre>
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">결제 계정 연결 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="결제 계정 연결 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">결제 계정 연결 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -823,10 +880,14 @@ cp ~/Downloads/client_secret_*.json .keys/</pre>
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">VM 인스턴스 생성 완료 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="VM 인스턴스 생성 완료 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">VM 인스턴스 생성 완료 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -905,10 +966,14 @@ gcloud compute scp .keys/client_secret_*.json [인스턴스명]:~/.keys/ \
         </div>
         <p>인증 링크가 나타나면 브라우저에서 열고, 모든 서비스를 <strong>선택</strong>한 뒤 <strong>계속</strong>을 눌러주세요. 나타나는 리다이렉트 주소를 복사하여 터미널에 붙여넣으면 인증이 완료됩니다.</p>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">gog-cli 인증 완료 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="gog-cli 인증 완료 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">gog-cli 인증 완료 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -1008,10 +1073,14 @@ gcloud compute scp .keys/client_secret_*.json [인스턴스명]:~/.keys/ \
           </div>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">BotFather 봇 생성 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="BotFather 봇 생성 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">BotFather 봇 생성 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>7-3. 온보딩 마무리</h3>
@@ -1113,10 +1182,14 @@ gcloud compute scp .keys/client_secret_*.json [인스턴스명]:~/.keys/ \
           <pre>내 이메일 확인해줘. 광고성 메일은 삭제해줘.</pre>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">Gmail 관리 결과 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="Gmail 관리 결과 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">Gmail 관리 결과 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <h3>8-2. 캘린더 일정 등록</h3>
@@ -1173,10 +1246,14 @@ gcloud compute scp .keys/client_secret_*.json [인스턴스명]:~/.keys/ \
           <pre>작성한 문서 링크를 내 이메일로 보내줘.</pre>
         </div>
 
-        <div class="img-placeholder">
-          <div class="ph-icon">&#128247;</div>
-          <div class="ph-text">텔레그램에서 구글 서비스 활용 결과 화면</div>
-          <div class="ph-hint">해당 스크린샷 이미지를 준비하여 교체하세요</div>
+        <div class="img-gallery" data-label="텔레그램에서 구글 서비스 활용 결과 화면">
+          <div class="img-gallery-items"></div>
+          <div class="img-placeholder" onclick="this.querySelector('input').click()">
+            <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+            <div class="ph-icon">&#128247;</div>
+            <div class="ph-text">텔레그램에서 구글 서비스 활용 결과 화면</div>
+            <div class="ph-hint">클릭하여 이미지를 추가하세요 (여러 장 선택 가능)</div>
+          </div>
         </div>
 
         <div class="callout success">
@@ -1320,6 +1397,122 @@ navLinks.forEach(link => {
       sidebarOverlay.classList.remove('show');
     }
   });
+});
+
+// Image upload
+function handleImageUpload(event) {
+  const input = event.target;
+  const gallery = input.closest('.img-gallery');
+  const itemsContainer = gallery.querySelector('.img-gallery-items');
+  const files = Array.from(input.files);
+  let loaded = 0;
+
+  files.forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const item = document.createElement('div');
+      item.className = 'img-gallery-item';
+      const safeName = file.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      item.innerHTML =
+        '<img src="' + e.target.result + '" alt="' + safeName + '" loading="lazy">' +
+        '<div class="img-caption">' +
+        '<input type="text" placeholder="캡션을 입력하세요" value="">' +
+        '<button class="img-remove" onclick="removeImage(this)" title="삭제">&#10005;</button>' +
+        '</div>';
+      itemsContainer.appendChild(item);
+      loaded++;
+      if (loaded === files.length) {
+        updatePlaceholderText(gallery);
+        saveImagesToStorage();
+        showToast(files.length > 1 ? files.length + '개 이미지가 추가되었습니다!' : '이미지가 추가되었습니다!');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  input.value = '';
+}
+
+function removeImage(btn) {
+  const item = btn.closest('.img-gallery-item');
+  const gallery = item.closest('.img-gallery');
+  item.style.opacity = '0';
+  item.style.transform = 'scale(0.95)';
+  item.style.transition = 'all .2s';
+  setTimeout(() => {
+    item.remove();
+    updatePlaceholderText(gallery);
+    saveImagesToStorage();
+    showToast('이미지가 삭제되었습니다.');
+  }, 200);
+}
+
+function updatePlaceholderText(gallery) {
+  const count = gallery.querySelectorAll('.img-gallery-item').length;
+  const placeholder = gallery.querySelector('.img-placeholder');
+  const phText = placeholder.querySelector('.ph-text');
+  const phHint = placeholder.querySelector('.ph-hint');
+  const label = gallery.getAttribute('data-label');
+  if (count > 0) {
+    phText.textContent = '+ 이미지 추가';
+    phHint.textContent = count + '개 이미지 등록됨 \u00B7 클릭하여 더 추가';
+    placeholder.style.padding = '20px 24px';
+  } else {
+    phText.textContent = label;
+    phHint.textContent = '클릭하여 이미지를 추가하세요 (여러 장 선택 가능)';
+    placeholder.style.padding = '40px 24px';
+  }
+}
+
+// Persist images in localStorage
+function saveImagesToStorage() {
+  const galleries = document.querySelectorAll('.img-gallery');
+  const data = {};
+  galleries.forEach((g, i) => {
+    const items = g.querySelectorAll('.img-gallery-item');
+    if (items.length === 0) return;
+    data[i] = [];
+    items.forEach(item => {
+      data[i].push({
+        src: item.querySelector('img').src,
+        caption: item.querySelector('input').value
+      });
+    });
+  });
+  try { localStorage.setItem('tutorial-images', JSON.stringify(data)); }
+  catch(e) {}
+}
+
+function loadImagesFromStorage() {
+  try {
+    const raw = localStorage.getItem('tutorial-images');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    const galleries = document.querySelectorAll('.img-gallery');
+    Object.keys(data).forEach(idx => {
+      const gallery = galleries[parseInt(idx)];
+      if (!gallery) return;
+      const container = gallery.querySelector('.img-gallery-items');
+      data[idx].forEach(img => {
+        const item = document.createElement('div');
+        item.className = 'img-gallery-item';
+        item.innerHTML =
+          '<img src="' + img.src + '" alt="" loading="lazy">' +
+          '<div class="img-caption">' +
+          '<input type="text" placeholder="캡션을 입력하세요" value="' + (img.caption || '') + '">' +
+          '<button class="img-remove" onclick="removeImage(this)" title="삭제">&#10005;</button>' +
+          '</div>';
+        container.appendChild(item);
+      });
+      updatePlaceholderText(gallery);
+    });
+  } catch(e) {}
+}
+
+loadImagesFromStorage();
+document.addEventListener('change', function(e) {
+  if (e.target.closest('.img-caption')) saveImagesToStorage();
 });
 </script>
 </body>
